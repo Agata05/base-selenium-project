@@ -1,23 +1,35 @@
 package selenium;
 
+import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.openqa.selenium.WebDriver;
 
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import selenium.configurations.TypedProperties;
 
+@Slf4j
 public abstract class Pages extends SeleniumFunctions {
 
-	public Pages(final WebDriver driver) {
-		super(driver);
-	}
 
-	private String baseUrl = new TypedProperties("/test_config.properties").getValue("base_url");
+    private final static TypedProperties testConfig = new TypedProperties("/test_config.properties");
 
-	protected void open(String path){
-		driver.get(baseUrl + path);
-	}
+    public Pages(final WebDriver driver) {
+        super(driver);
+        PageFactory.initElements(driver, this);
+    }
 
-	protected void open(){
-		driver.get(baseUrl);
-	}
+    private String baseUrl = testConfig.getValue("base_url");
+
+
+    protected void open(String path) {
+        driver.get(baseUrl + path);
+    }
+
+    protected Pages open() {
+        driver.get(baseUrl);
+        return this;
+    }
 
 }

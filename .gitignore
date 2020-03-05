@@ -9,3 +9,4 @@ target/
 *.iws
 .idea/
 ?/
+/.mvn/wrapper/maven-wrapper.jar
